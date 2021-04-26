@@ -3,11 +3,15 @@ package sk.uniza.fri.sudora
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import sk.uniza.fri.sudora.notes.NoteViewModel
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -17,6 +21,5 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null)
                 .show()
         }
-
     }
 }
