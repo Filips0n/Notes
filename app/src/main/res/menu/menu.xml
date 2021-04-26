@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_new_task"
-        android:icon="@drawable/plus_icon"
-        android:title="@string/new_note"
-        app:showAsAction="always"/>
-</menu>
