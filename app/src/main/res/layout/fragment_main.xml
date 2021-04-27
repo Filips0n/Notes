@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainFragment">
+        tools:context=".MainFragment" >
 
         <!-- TODO: Update blank fragment layout -->
         <TextView
@@ -32,7 +32,7 @@
                 android:layout_gravity="bottom|end"
                 android:layout_margin="32dp"
                 android:src="@drawable/ic_baseline_add_24"
-                app:backgroundTint="#FFEB3B"
+                app:backgroundTint="@color/yellow"
                 app:fabSize="normal"
                 app:rippleColor="#FFFFFF" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

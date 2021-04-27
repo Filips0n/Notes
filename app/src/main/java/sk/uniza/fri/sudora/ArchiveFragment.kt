@@ -7,25 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
+import sk.uniza.fri.sudora.databinding.FragmentArchiveBinding
 import sk.uniza.fri.sudora.databinding.FragmentMainBinding
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MainFragment.newInstance] factory method to
+ * Use the [ArchiveFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MainFragment : Fragment() {
+class ArchiveFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentMainBinding>(inflater, R.layout.fragment_main, container, false)
-        binding.newNoteButton.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_mainFragment_to_createNoteFragment)
-        }
-
+        val binding = DataBindingUtil.inflate<FragmentArchiveBinding>(inflater, R.layout.fragment_archive, container, false)
         return binding.root
     }
 }
