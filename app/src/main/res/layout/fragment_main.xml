@@ -12,11 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".MainFragment" >
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="MAIN FRAGMENT TEXT" />
+
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/layout_new_note"
             android:layout_width="match_parent"
@@ -24,6 +20,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="MissingConstraints">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/note_list"
+                tools:layout_editor_absoluteX="196dp"
+                tools:layout_editor_absoluteY="162dp"
+                android:scrollbars="vertical"/>
+                <!--app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/new_note_button"
@@ -35,6 +40,20 @@
                 app:backgroundTint="@color/yellow"
                 app:fabSize="normal"
                 app:rippleColor="#FFFFFF" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <TextView
+            android:id="@+id/text_view_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_notes_to_display"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

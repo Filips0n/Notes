@@ -14,9 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MainActivity"
-            android:background="#EFEDEC">
+            android:background="#EFEDEC"
+            android:id="@+id/content_id">
             <!-- The NavHostFragment within the activity_main layout -->
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/myNavHostFragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"

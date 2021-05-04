@@ -9,4 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#EFD911</color>
     <color name="dark_yellow">#DCC711</color>
+
+    <color name="task_text">#202124</color>
+    <color name="yellow_task">#fff475</color>
+    <color name="blue_task">#cbf0f8</color>
+    <color name="green_task">#ccff90</color>
+    <color name="pink_task">#ffccec</color>
+
 </resources>

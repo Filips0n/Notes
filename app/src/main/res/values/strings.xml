@@ -4,6 +4,33 @@
     <string name="archive">Archive</string>
     <string name="trash">Trash</string>
     <string name="notes">Notes</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="enter_your_note_here">Enter your note here</string>
+
+    <string name="tab_label_todo">TODO</string>
+    <string name="tab_label_doing">DOING</string>
+    <string name="tab_label_done">DONE</string>
+    <string name="delete_dialog_title">Delete note</string>
+    <string name="delete_dialog_text">Are you sure you want to delete this note?</string>
+    <string name="delete_dialog_yes_button_label">Yes</string>
+    <string name="delete_dialog_no_button_label">No</string>
+    <string name="new_task">New task</string>
+    <string name="delete_btn_cont_desc">Delete button</string>
+    <string name="color_btn_cont_desc">Open/close color palette button</string>
+    <string name="drag_btn_cont_desc">Hold and drag note button</string>
+    <string name="blue_btn_cont_desc">Blue color button</string>
+    <string name="green_btn_cont_desc">Green color button</string>
+    <string name="yellow_btn_cont_desc">Yellow color button</string>
+    <string name="pink_btn_cont_desc">Pink color button</string>
+    <string name="note_description_is_required">Note Description is Required</string>
+    <string name="note_title_is_required">Note Title is Required</string>
+    <string name="archive_btn_desc">Archive button</string>
+    <string name="notification_btn_desc">Notifiacion button</string>
+    <string name="share_btn_desc">Share button</string>
+    <string name="pallete_btn_desc">Coler picker button</string>
+    <string name="buttons_background">Buttons background</string>
+    <string name="your_archive_is_empty">YOUR ARCHIVE IS EMPTY</string>
+    <string name="your_trash_is_empty">YOUR TRASH IS EMPTY</string>
+    <string name="no_notes_to_display">NO NOTES TO DISPLAY</string>
+    <string name="title">Title</string>
 </resources>
