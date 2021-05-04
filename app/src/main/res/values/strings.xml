@@ -21,7 +21,7 @@
     <string name="blue_btn_cont_desc">Blue color button</string>
     <string name="green_btn_cont_desc">Green color button</string>
     <string name="yellow_btn_cont_desc">Yellow color button</string>
-    <string name="pink_btn_cont_desc">Pink color button</string>
+    <string name="red_btn_cont_desc">Pink color button</string>
     <string name="note_description_is_required">Note Description is Required</string>
     <string name="note_title_is_required">Note Title is Required</string>
     <string name="archive_btn_desc">Archive button</string>

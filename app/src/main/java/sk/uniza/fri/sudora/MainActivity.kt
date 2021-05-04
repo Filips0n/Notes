@@ -20,15 +20,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-
         drawerLayout = binding.drawerLayout
         viewModel = ViewModelProvider(this).get(NoteListViewModel::class.java)
         readDataToViewModel()
-
         val navController = this.findNavController(R.id.myNavHostFragment)
         NavigationUI.setupActionBarWithNavController(this,navController)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
+        Log.d("MainActivity", "onCreate()")
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -38,10 +37,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        writeDataFromViewModel()
+        Log.d("MainActivity", "onStop()")
+        writeFromViewModel()
     }
 
-    private fun writeDataFromViewModel(){
+    private fun writeFromViewModel(){
         val gson = Gson()
 
         val noteJSON = gson.toJson(viewModel.noteList.value)
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         val archiveJSON = sharedPrefs.getString("archiveJSON", "[]")
         val trashJSON = sharedPrefs.getString("trashJSON", "[]")
 
-        val type = object: TypeToken<MutableList<Note?>>() {}.type //Gson requires type ref for generic types
+        val type = object: TypeToken<MutableList<Note?>>() {}.type
         viewModel.addToViewModel(gson.fromJson(noteJSON, type), gson.fromJson(archiveJSON, type), gson.fromJson(trashJSON, type))
     }
 }

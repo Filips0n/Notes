@@ -2,17 +2,23 @@ package sk.uniza.fri.sudora.notes
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Color.*
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import sk.uniza.fri.sudora.MainFragmentArgs
 import sk.uniza.fri.sudora.R
 import sk.uniza.fri.sudora.databinding.FragmentCreateNoteBinding
+import java.lang.NullPointerException
 import java.util.*
 
 
@@ -22,9 +28,10 @@ import java.util.*
  * create an instance of this fragment.
  */
 class CreateNoteFragment : Fragment() {
-
     private lateinit var binding: FragmentCreateNoteBinding
-    var note = Note(UUID.randomUUID(), "", "")
+    private val args by navArgs<CreateNoteFragmentArgs>()
+
+    var note = Note(UUID.randomUUID(), "", "", NoteColor.YELLOW)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +41,14 @@ class CreateNoteFragment : Fragment() {
         binding = DataBindingUtil.inflate<FragmentCreateNoteBinding>(
             inflater, R.layout.fragment_create_note, container, false
         )
+        try {
+            note = args.editNote!!
+        } catch (e :NullPointerException) {}
+
+        if (note != null) {
+            binding.noteTitleInput.setText(note.noteTitle, TextView.BufferType.EDITABLE)
+            binding.noteInput.setText(note.noteText, TextView.BufferType.EDITABLE)
+        }
         return binding.root
     }
 

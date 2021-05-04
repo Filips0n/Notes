@@ -17,7 +17,7 @@
             android:background="#EFEDEC"
             android:id="@+id/content_id">
             <!-- The NavHostFragment within the activity_main layout -->
-            <androidx.fragment.app.FragmentContainerView
+            <fragment
                 android:id="@+id/myNavHostFragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"

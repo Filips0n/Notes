@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -49,8 +48,8 @@ class MainFragment : Fragment() {
         }
 
         val adapter = NoteAdapter(viewModel, ListType.NOTE, NoteListener { noteId ->
-                Toast.makeText(context, "$noteId", Toast.LENGTH_SHORT).show()
-            })
+                Toast.makeText(context, "${noteId}", Toast.LENGTH_SHORT).show()
+            }, this.context)
         binding.noteList.adapter = adapter
         binding.lifecycleOwner = this
         ////////
@@ -75,6 +74,16 @@ class MainFragment : Fragment() {
 
     private fun isInViewModel() : Boolean {
         for (item in viewModel.noteList.value!!) {
+            if (args.note?.noteId == item?.noteId) {
+                return true
+            }
+        }
+        for (item in viewModel.archiveList.value!!) {
+            if (args.note?.noteId == item?.noteId) {
+                return true
+            }
+        }
+        for (item in viewModel.trashList.value!!) {
             if (args.note?.noteId == item?.noteId) {
                 return true
             }

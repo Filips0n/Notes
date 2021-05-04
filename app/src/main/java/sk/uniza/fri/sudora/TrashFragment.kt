@@ -12,7 +12,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import sk.uniza.fri.sudora.adapter.NoteAdapter
 import sk.uniza.fri.sudora.adapter.NoteListener
-import sk.uniza.fri.sudora.databinding.FragmentArchiveBinding
 import sk.uniza.fri.sudora.databinding.FragmentTrashBinding
 
 /**
@@ -31,7 +30,7 @@ class TrashFragment : Fragment() {
 
         val adapter = NoteAdapter(viewModel, ListType.TRASH ,NoteListener { noteId ->
             Toast.makeText(context, "$noteId", Toast.LENGTH_LONG).show()
-        })
+        }, this.context)
         binding.trashList.adapter = adapter
         viewModel.trashList.observe(viewLifecycleOwner, Observer {
             it?.let {

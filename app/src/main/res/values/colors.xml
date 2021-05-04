@@ -7,13 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="yellow">#EFD911</color>
+    <color name="yellow">#EFD90D</color>
     <color name="dark_yellow">#DCC711</color>
 
-    <color name="task_text">#202124</color>
-    <color name="yellow_task">#fff475</color>
-    <color name="blue_task">#cbf0f8</color>
-    <color name="green_task">#ccff90</color>
-    <color name="pink_task">#ffccec</color>
-
+    <color name="note_text">#202124</color>
+    <color name="yellow_note">#F6EA63</color>
+    <color name="green_note">#89CF36</color>
+    <color name="blue_note">#566CD5</color>
+    <color name="red_note">#CF7272</color>
 </resources>

@@ -5,19 +5,23 @@ import android.os.Parcelable
 import java.util.*
 
 data class Note(val noteId: UUID,
-                var noteTitle: String,
-                var noteText: String): Parcelable {
+                         var noteTitle: String,
+                         var noteText: String,
+                         var color: NoteColor): Parcelable {
     constructor(parcel: Parcel) : this(
-        TODO("noteId"),
-        parcel.readString().toString(),
-        parcel.readString().toString()
-    )
+            TODO("noteId"),
+            parcel.readString()!!,
+            parcel.readString()!!,
+            TODO("color")) {
+    }
 
     override fun describeContents(): Int {
         TODO("Not yet implemented")
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.writeString(noteTitle);
+        dest?.writeString(noteText);
     }
 
     companion object CREATOR : Parcelable.Creator<Note> {
@@ -29,6 +33,5 @@ data class Note(val noteId: UUID,
             return arrayOfNulls(size)
         }
     }
-
 
 }

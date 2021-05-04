@@ -15,27 +15,23 @@
             app:argType="sk.uniza.fri.sudora.notes.Note"
             android:defaultValue="@null"
             app:nullable="true"/>
-
-        <!--<argument android:name="noteId" />
-        <argument
-            android:name="noteTitle"
-            app:argType="string"
-            android:defaultValue=""/>
-        <argument
-            android:name="noteText"
-            app:argType="string"
-            android:defaultValue=""/>-->
-
-
     </fragment>
     <fragment
         android:id="@+id/archiveFragment"
         android:name="sk.uniza.fri.sudora.ArchiveFragment"
-        android:label="Archive" />
+        android:label="Archive" >
+        <action
+            android:id="@+id/action_archiveFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/trashFragment"
         android:name="sk.uniza.fri.sudora.TrashFragment"
-        android:label="Trash" />
+        android:label="Trash" >
+        <action
+            android:id="@+id/action_trashFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/createNoteFragment"
         android:name="sk.uniza.fri.sudora.notes.CreateNoteFragment"
@@ -45,5 +41,10 @@
             app:destination="@id/mainFragment"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="editNote"
+            app:argType="sk.uniza.fri.sudora.notes.Note"
+            android:defaultValue="@null"
+            app:nullable="true"/>
     </fragment>
 </navigation>

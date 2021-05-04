@@ -30,7 +30,7 @@ class ArchiveFragment : Fragment() {
 
         val adapter = NoteAdapter(viewModel, ListType.ARCHIVE ,NoteListener { noteId ->
             Toast.makeText(context, "$noteId", Toast.LENGTH_LONG).show()
-        })
+        }, this.context)
         binding.archiveList.adapter = adapter
 
         viewModel.archiveList.observe(viewLifecycleOwner, Observer {
