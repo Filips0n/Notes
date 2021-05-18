@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainFragment" >
+        android:background="?attr/colorOnPrimary"
+        tools:context=".MainFragment">
 
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -22,13 +23,14 @@
             tools:ignore="MissingConstraints">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/note_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/note_list"
+                android:scrollbars="vertical"
                 tools:layout_editor_absoluteX="196dp"
                 tools:layout_editor_absoluteY="162dp"
-                android:scrollbars="vertical"/>
-                <!--app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+                android:layoutAnimation="@anim/layout_animation"/>
+            <!--app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/new_note_button"
@@ -39,7 +41,8 @@
                 android:src="@drawable/ic_baseline_add_24"
                 app:backgroundTint="@color/yellow"
                 app:fabSize="normal"
-                app:rippleColor="#FFFFFF" />
+                app:rippleColor="#FFFFFF"
+                android:contentDescription="@string/floating_action_button_to_create_new_note" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

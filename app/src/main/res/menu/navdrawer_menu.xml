@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/navDrawerMenu"
+        android:checkableBehavior="none">
     <item
         android:id="@+id/mainFragment"
         android:icon="@drawable/ic_baseline_notes_24"
@@ -14,4 +15,9 @@
         android:id="@+id/trashFragment"
         android:icon="@drawable/ic_baseline_delete_24"
         android:title="@string/trash" />
+    </group>
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings" />
 </menu>

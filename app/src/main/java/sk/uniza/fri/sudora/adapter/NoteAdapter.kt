@@ -1,16 +1,18 @@
 package sk.uniza.fri.sudora.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import sk.uniza.fri.sudora.*
 import sk.uniza.fri.sudora.ListType.ARCHIVE
 import sk.uniza.fri.sudora.ListType.TRASH
@@ -173,6 +175,18 @@ class NoteAdapter(
                 }
             }
 
+            binding.btnNotification.setOnClickListener {
+
+            }
+
+            binding.btnShare.setOnClickListener {
+                val shareIntent = Intent().apply {
+                    this.action = Intent.ACTION_SEND
+                    this.putExtra(Intent.EXTRA_TEXT, "Note Title: " + binding.noteTitleView.text + "\nNote Text: " + binding.noteTextView.text)
+                    this.type = "text/plain"
+                }
+                context.startActivity(shareIntent)
+            }
             return this
         }
 

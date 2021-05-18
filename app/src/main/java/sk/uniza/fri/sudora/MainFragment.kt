@@ -1,11 +1,13 @@
 package sk.uniza.fri.sudora
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -13,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import sk.uniza.fri.sudora.adapter.NoteAdapter
 import sk.uniza.fri.sudora.adapter.NoteListener
 import sk.uniza.fri.sudora.databinding.FragmentMainBinding
@@ -44,12 +47,18 @@ class MainFragment : Fragment() {
 
         val note = args.note
         if(!isInViewModel() && note != null && note.noteTitle != "" && note.noteText != "") {
-            viewModel.addNote(note, ListType.NOTE)
+
+            val appSettingsPrefs: SharedPreferences = this.requireContext().getSharedPreferences(getString(R.string.app_settings_prefs), 0)
+            val isNewNoteTopON: Boolean = appSettingsPrefs.getBoolean(getString(R.string.new_note_top), false)
+            if (isNewNoteTopON){
+                viewModel.noteList.value!!.add(0, note)
+            } else {
+                viewModel.addNote(note, ListType.NOTE)
+            }
+            Snackbar.make(binding.newNoteButton, getString(R.string.note_added_successfully), Snackbar.LENGTH_SHORT).setAnchorView(binding.newNoteButton).show()
         }
 
-        val adapter = NoteAdapter(viewModel, ListType.NOTE, NoteListener { noteId ->
-                Toast.makeText(context, "${noteId}", Toast.LENGTH_SHORT).show()
-            }, this.context)
+        val adapter = NoteAdapter(viewModel, ListType.NOTE, NoteListener {}, this.context)
         binding.noteList.adapter = adapter
         binding.lifecycleOwner = this
         ////////
@@ -64,7 +73,6 @@ class MainFragment : Fragment() {
                 binding.textViewNote.text = getString(R.string.no_notes_to_display)
             }
         })
-
         ////////
         val manager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
         binding.noteList.layoutManager = manager

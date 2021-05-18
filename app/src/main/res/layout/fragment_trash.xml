@@ -10,15 +10,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/colorOnPrimary"
         tools:context=".TrashFragment">
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trash_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/trash_list"
-            tools:layout_editor_absoluteX="196dp"
-            tools:layout_editor_absoluteY="162dp"
             android:scrollbars="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:layout_editor_absoluteX="196dp"
+            tools:layout_editor_absoluteY="162dp" />
+
         <TextView
             android:id="@+id/text_view_trash"
             android:layout_width="wrap_content"

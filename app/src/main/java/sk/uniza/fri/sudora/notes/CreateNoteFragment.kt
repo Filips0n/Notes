@@ -2,23 +2,20 @@ package sk.uniza.fri.sudora.notes
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Color.*
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import sk.uniza.fri.sudora.MainFragmentArgs
 import sk.uniza.fri.sudora.R
 import sk.uniza.fri.sudora.databinding.FragmentCreateNoteBinding
-import java.lang.NullPointerException
 import java.util.*
 
 
@@ -33,28 +30,31 @@ class CreateNoteFragment : Fragment() {
 
     var note = Note(UUID.randomUUID(), "", "", NoteColor.YELLOW)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
         binding = DataBindingUtil.inflate<FragmentCreateNoteBinding>(
-            inflater, R.layout.fragment_create_note, container, false
+                inflater, R.layout.fragment_create_note, container, false
         )
+        //binding.noteTitleInput.requestFocus();
         try {
             note = args.editNote!!
-        } catch (e :NullPointerException) {}
+        } catch (e: NullPointerException) {}
 
         if (note != null) {
             binding.noteTitleInput.setText(note.noteTitle, TextView.BufferType.EDITABLE)
             binding.noteInput.setText(note.noteText, TextView.BufferType.EDITABLE)
         }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
-        binding.backButton.setOnClickListener { view : View ->
+        binding.backButton.setOnClickListener { view: View ->
             view.findNavController().navigate(CreateNoteFragmentDirections.actionCreateNoteFragmentToMainFragment(note))
         }
 
@@ -83,18 +83,24 @@ class CreateNoteFragment : Fragment() {
     private fun isText() : Boolean {
         if (binding.noteTitleInput.text.isNullOrEmpty()){
             val toast = Toast.makeText(context, getString(R.string.note_title_is_required), Toast.LENGTH_SHORT)
-            toast.setGravity(Gravity.CENTER_VERTICAL,0,0)
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
             toast.show()
             return false
         } else if (binding.noteInput.text.isNullOrEmpty()){
             val toast = Toast.makeText(context, getString(R.string.note_description_is_required), Toast.LENGTH_SHORT)
-            toast.setGravity(Gravity.CENTER_VERTICAL,0,0)
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
             toast.show()
             return false
         }
         return true
     }
 
+    override fun onResume() {
+        //https://stackoverflow.com/questions/10508363/show-keyboard-for-edittext-when-fragment-starts
+//        val imgr = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        super.onResume()
+    }
     override fun onPause() {
         super.onPause()
         hideKeyboard(this.requireActivity())
