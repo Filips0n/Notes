@@ -6,7 +6,6 @@ import android.graphics.Color.*
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,44 +19,38 @@ import java.util.*
 
 
 /**
- * A simple [Fragment] subclass.
- * Use the [CreateNoteFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Frogment pre vytvaranie a upravovanie poznamok
  */
 class CreateNoteFragment : Fragment() {
     private lateinit var binding: FragmentCreateNoteBinding
     private val args by navArgs<CreateNoteFragmentArgs>()
-
     var note = Note(UUID.randomUUID(), "", "", NoteColor.YELLOW)
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
+        //skrytie action baru pred vstupom do fragmentu
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
-        binding = DataBindingUtil.inflate<FragmentCreateNoteBinding>(
-                inflater, R.layout.fragment_create_note, container, false
-        )
-        //binding.noteTitleInput.requestFocus();
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_note, container, false)
         try {
             note = args.editNote!!
         } catch (e: NullPointerException) {}
 
-        if (note != null) {
-            binding.noteTitleInput.setText(note.noteTitle, TextView.BufferType.EDITABLE)
-            binding.noteInput.setText(note.noteText, TextView.BufferType.EDITABLE)
-        }
+        binding.noteTitleInput.setText(note.noteTitle, TextView.BufferType.EDITABLE)
+        binding.noteInput.setText(note.noteText, TextView.BufferType.EDITABLE)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
+        //ak je stacene tlacidlo spat, chod na main fragment
         binding.backButton.setOnClickListener { view: View ->
             view.findNavController().navigate(CreateNoteFragmentDirections.actionCreateNoteFragmentToMainFragment(note))
         }
-
+        //ak je stlacene tlacitlo ulozenia poznamky, skontroluj ci je v poznamke text, uloz poznamku a chod na main fragment
         binding.doneButton.setOnClickListener {
             if (isText()) {
                 saveNote()
@@ -65,6 +58,10 @@ class CreateNoteFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * Nastavi poznamke nadpis a text z vstupu
+     */
     private fun saveNote(){
         val title = binding.noteTitleInput.text.toString()
         val text = binding.noteInput.text.toString()
@@ -72,7 +69,10 @@ class CreateNoteFragment : Fragment() {
         note.noteText = text
     }
 
-    //https://stackoverflow.com/questions/1109022/how-do-you-close-hide-the-android-soft-keyboard-programmatically?rq=1
+    /**
+     * Programovo skryje klavesnicu
+     * https://stackoverflow.com/questions/1109022/how-do-you-close-hide-the-android-soft-keyboard-programmatically?rq=1
+     */
     private fun hideKeyboard(activity: Activity) {
         val view: View = activity.findViewById(android.R.id.content)
         val imm =
@@ -80,6 +80,10 @@ class CreateNoteFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+    /**
+     * Zisti ci sa nachadza vo vstupnych poliach text
+     * @return true ak je text v nadpise aj v poznamke, inak false
+     */
     private fun isText() : Boolean {
         if (binding.noteTitleInput.text.isNullOrEmpty()){
             val toast = Toast.makeText(context, getString(R.string.note_title_is_required), Toast.LENGTH_SHORT)
@@ -95,12 +99,9 @@ class CreateNoteFragment : Fragment() {
         return true
     }
 
-    override fun onResume() {
-        //https://stackoverflow.com/questions/10508363/show-keyboard-for-edittext-when-fragment-starts
-//        val imgr = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
-        super.onResume()
-    }
+    /**
+     * Pri odchode z fragmentu skry klavesnicu
+     */
     override fun onPause() {
         super.onPause()
         hideKeyboard(this.requireActivity())

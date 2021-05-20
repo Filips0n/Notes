@@ -1,6 +1,5 @@
 package sk.uniza.fri.sudora
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
@@ -9,18 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import sk.uniza.fri.sudora.adapter.NoteAdapter
-import sk.uniza.fri.sudora.adapter.NoteListener
 import sk.uniza.fri.sudora.databinding.FragmentSettingsBinding
-import sk.uniza.fri.sudora.databinding.FragmentTrashBinding
 
 /**
- * A simple [Fragment] subclass.
- * Use the [TrashFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment, v ktorom si pouzivatel moze nastavit svoje preferencie
  */
 class SettingsFragment : Fragment() {
 
@@ -28,14 +19,16 @@ class SettingsFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
+        //zobrazi action bar
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         val binding = DataBindingUtil.inflate<FragmentSettingsBinding>(inflater, R.layout.fragment_settings, container, false)
-
+        //ziska aktualnu preferenciu od pouzivatela ohladom tmaveho rezimu
         val appSettingsPrefs: SharedPreferences = this.requireContext().getSharedPreferences(getString(R.string.app_settings_prefs), 0)
         val sharedPrefsEdit : SharedPreferences.Editor = appSettingsPrefs.edit()
         val isNightModeOn: Boolean = appSettingsPrefs.getBoolean(getString(R.string.dark_modeKey), false)
 
         val switchDarkMode = binding.darkModeSwitch
+        //ak je pouzivatelom z preferencii nastaveny switch ako zapnuty tak ho zapne
         switchDarkMode.isChecked = isNightModeOn
         switchDarkMode.setOnClickListener {
             if (isNightModeOn){
@@ -51,8 +44,10 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        //switch pre nastavenie preferencie, ci sa ma zobrazovat nova poznamka ako prva alebo ako posledna
         val isNewNoteTopON: Boolean = appSettingsPrefs.getBoolean(getString(R.string.new_note_top), false)
         val newNoteToTop = binding.newNotesAddSwitch
+        //ak je pouzivatelom z preferencii nastaveny switch ako zapnuty tak ho zapne
         newNoteToTop.isChecked = isNewNoteTopON
         newNoteToTop.setOnClickListener {
             if (isNewNoteTopON){

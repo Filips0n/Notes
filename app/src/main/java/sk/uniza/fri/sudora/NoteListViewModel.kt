@@ -7,10 +7,14 @@ import sk.uniza.fri.sudora.notes.Note
 import java.util.*
 
 class NoteListViewModel : ViewModel() {
-    fun addNote(note: Note, type: ListType) {
+    fun addNote(note: Note, type: ListType, position: Int = -1) {
         when(type) {
             ListType.NOTE ->{
-                __notesList.add(note)
+                if (position == -1) {
+                    __notesList.add(note)
+                } else {
+                    __notesList.add(position, note)
+                }
                 _notesList.postValue(__notesList)
             }
             ListType.ARCHIVE ->{
@@ -42,19 +46,33 @@ class NoteListViewModel : ViewModel() {
         }
     }
 
-    fun addToViewModel(noteData: MutableList<Note?>, archiveData: MutableList<Note?>, trashData: MutableList<Note?>) {
+    fun addToViewModel(noteData: MutableList<Note?>, archiveData: MutableList<Note?>, trashData: MutableList<Note?>, noOfPinnedNotes : Int) {
         __notesList = noteData
         _notesList.postValue(__notesList)
         __archiveList = archiveData
         _archiveList.postValue(__archiveList)
         __trashList = trashData
         _trashList.postValue(__trashList)
+        _numberOfPinnedNotes = noOfPinnedNotes
     }
+
+    fun increaseNumberOfPinnedNotes() {
+        _numberOfPinnedNotes++
+    }
+
+    fun decreaseNumberOfPinnedNotes() {
+        _numberOfPinnedNotes--
+    }
+
     private var __notesList = mutableListOf<Note?>()
     private var __archiveList = mutableListOf<Note?>()
     private var __trashList = mutableListOf<Note?>()
 
     private var __noteListAllRemoved = mutableListOf<Note?>()
+
+    private var _numberOfPinnedNotes : Int = 0
+    val numberOfPinnedNotes : Int
+        get() = _numberOfPinnedNotes
 
     private var _notesList = MutableLiveData<MutableList<Note?>>().apply { this.value = __notesList }
     val noteList : LiveData<MutableList<Note?>>
@@ -67,7 +85,6 @@ class NoteListViewModel : ViewModel() {
     private var _trashList = MutableLiveData<MutableList<Note?>>().apply { this.value = __trashList }
     val trashList : LiveData<MutableList<Note?>>
         get() = _trashList
-
 
     private var _noteListAllRemoved = MutableLiveData<MutableList<Note?>>().apply { this.value = __noteListAllRemoved }
     val noteListAllRemoved : LiveData<MutableList<Note?>>

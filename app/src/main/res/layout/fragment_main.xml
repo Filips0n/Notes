@@ -21,7 +21,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="MissingConstraints">
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pinned_notes_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                tools:layout_editor_absoluteX="196dp"
+                tools:layout_editor_absoluteY="162dp"
+                android:layoutAnimation="@anim/layout_animation"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/note_list"
                 android:layout_width="match_parent"

@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import sk.uniza.fri.sudora.*
 import sk.uniza.fri.sudora.ListType.ARCHIVE
 import sk.uniza.fri.sudora.ListType.TRASH
@@ -38,12 +36,23 @@ class NoteAdapter(
             holder.bind(item, clickListener)
             holder.binding.noteTitleView.text = item?.noteTitle
             holder.binding.noteTextView.text = item?.noteText
-            holder.itemView.setBackgroundResource(getBackgroundColorOfItem(item.color))
+            if (item.isPinned) {
+                holder.itemView.setBackgroundResource(R.drawable.note_card_pinned)
+            } else {
+                holder.itemView.setBackgroundResource(getBackgroundColorOfItem(item))
+            }
         } catch (e: NullPointerException) {}
     }
 
-    private fun getBackgroundColorOfItem(color: NoteColor): Int {
-        when(color) {
+    /**
+     * Podla farby nastavenej v poznamke urci akej farby ma byt poznamka
+     *
+     * @param color farba poznamky
+     *
+     * @return cestu suboru k podfarbeniu poznamky
+     */
+    private fun getBackgroundColorOfItem(note: Note): Int {
+        when(note.color) {
             NoteColor.YELLOW -> return R.drawable.note_card_yellow
             NoteColor.GREEN -> return R.drawable.note_card_green
             NoteColor.BLUE -> return R.drawable.note_card_blue
@@ -88,11 +97,17 @@ class NoteAdapter(
             }
         }
 
+        /**
+         * Pocuvac na vsetky tlacitka poznamky
+         */
         private fun buttonListener(): NoteViewHolder {
             binding.btnDelete.setOnClickListener {
                 when(listType){
                     NOTE1 -> {
                         viewModel.removeNote(note, NOTE1)
+                        setColorOfBackground(note)
+                        note.isPinned = false
+                        viewModel.decreaseNumberOfPinnedNotes()
                         viewModel.addNote(note, TRASH)
                     }
                     ARCHIVE -> {
@@ -111,6 +126,9 @@ class NoteAdapter(
                 when(listType){
                     NOTE1 -> {
                         viewModel.removeNote(note, NOTE1)
+                        setColorOfBackground(note)
+                        note.isPinned = false
+                        viewModel.decreaseNumberOfPinnedNotes()
                         viewModel.addNote(note, ARCHIVE)
                     }
                     ARCHIVE -> {
@@ -175,8 +193,29 @@ class NoteAdapter(
                 }
             }
 
-            binding.btnNotification.setOnClickListener {
+            binding.btnPin.setOnClickListener {
+                if(note.isPinned) {
+                    setColorOfBackground(note)
+                    note.isPinned = false
+                    binding.btnPalette.visibility = View.VISIBLE
+                    binding.btnPalette.isClickable = true
 
+                    viewModel.removeNote(note, NOTE1)
+                    //viewModel.addNote(note, NOTE1, viewModel.noteList.value!!.size)
+                    viewModel.decreaseNumberOfPinnedNotes()
+                    viewModel.addNote(note, NOTE1, viewModel.numberOfPinnedNotes)
+                    binding.btnPin.setImageResource(R.drawable.pin)
+                } else{
+                    note.isPinned = true
+                    binding.btnPalette.visibility = View.INVISIBLE
+                    binding.btnPalette.isClickable = false
+
+                    viewModel.removeNote(note, NOTE1)
+                    viewModel.addNote(note, NOTE1, 0)
+                    viewModel.increaseNumberOfPinnedNotes()
+                    itemView.setBackgroundResource(R.drawable.note_card_pinned)
+                    binding.btnPin.setImageResource(R.drawable.ic_baseline_push_pin_24)
+                }
             }
 
             binding.btnShare.setOnClickListener {
@@ -190,6 +229,14 @@ class NoteAdapter(
             return this
         }
 
+        fun setColorOfBackground(note : Note) {
+            when(note.color) {
+                NoteColor.YELLOW -> itemView.setBackgroundResource(R.drawable.note_card_yellow)
+                NoteColor.GREEN -> itemView.setBackgroundResource(R.drawable.note_card_green)
+                NoteColor.BLUE -> itemView.setBackgroundResource(R.drawable.note_card_blue)
+                NoteColor.RED -> itemView.setBackgroundResource(R.drawable.note_card_red)
+            }
+        }
 
         fun moveDataToViewHolder(viewModel: NoteListViewModel, note: Note?, listType: ListType, context: Context) {
             this.note = note!!
@@ -201,14 +248,25 @@ class NoteAdapter(
                     .setMessage(R.string.delete_dialog_text)
                     .setNegativeButton(R.string.delete_dialog_no_button_label)
                     { _, _ -> }
+            if (note.isPinned) {
+                binding.btnPin.setImageResource(R.drawable.ic_baseline_push_pin_24)
+                binding.btnPalette.visibility = View.INVISIBLE
+                binding.btnPalette.isClickable = false
+            } else {
+                binding.btnPin.setImageResource(R.drawable.pin)
+                binding.btnPalette.visibility = View.VISIBLE
+                binding.btnPalette.isClickable = true
+            }
             when(listType) {
                 ARCHIVE -> {
                     binding.btnArchive.setImageResource(R.drawable.ic_baseline_notes_24)
+                    binding.btnPin.isClickable = false
+                    binding.btnPin.visibility = View.INVISIBLE
                 }
                 TRASH -> {
                     binding.btnArchive.setImageResource(R.drawable.ic_baseline_notes_24)
-                    binding.btnNotification.isClickable = false
-                    binding.btnNotification.visibility = View.INVISIBLE
+                    binding.btnPin.isClickable = false
+                    binding.btnPin.visibility = View.INVISIBLE
                     binding.btnShare.isClickable = false
                     binding.btnShare.visibility = View.INVISIBLE
                 }

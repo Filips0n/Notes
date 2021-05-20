@@ -73,14 +73,14 @@
             tools:ignore="MissingConstraints" />
 
         <ImageButton
-            android:id="@+id/btn_notification"
+            android:id="@+id/btn_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:background="@drawable/note_button_background"
             android:backgroundTint="#1E202124"
             android:backgroundTintMode="src_in"
-            android:contentDescription="@string/notification_btn_desc"
+            android:contentDescription="@string/pin_button_desc"
             android:padding="8dp"
             android:tint="#8C202124"
             android:tintMode="src_in"
@@ -88,7 +88,7 @@
             app:layout_constraintStart_toEndOf="@+id/btn_archive"
             app:layout_constraintTop_toBottomOf="@+id/note_text_view"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_baseline_notifications_24"
+            app:srcCompat="@drawable/pin"
             tools:ignore="MissingConstraints" />
 
         <ImageButton
@@ -104,7 +104,7 @@
             android:tint="#8C202124"
             android:tintMode="src_in"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_notification"
+            app:layout_constraintStart_toEndOf="@+id/btn_pin"
             app:layout_constraintTop_toBottomOf="@+id/note_text_view"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_baseline_share_24"

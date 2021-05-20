@@ -1,6 +1,5 @@
 package sk.uniza.fri.sudora
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -15,25 +14,22 @@ import sk.uniza.fri.sudora.adapter.NoteListener
 import sk.uniza.fri.sudora.databinding.FragmentTrashBinding
 
 /**
- * A simple [Fragment] subclass.
- * Use the [TrashFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment, ktory zobrazuje poznamky ulozene v kosi
  */
 class TrashFragment : Fragment() {
     private val viewModel: NoteListViewModel by activityViewModels()
     lateinit var adapter : NoteAdapter
     lateinit var binding : FragmentTrashBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-        binding = DataBindingUtil.inflate<FragmentTrashBinding>(inflater, R.layout.fragment_trash, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_trash, container, false)
 
 
-        adapter = NoteAdapter(viewModel, ListType.TRASH ,NoteListener { noteId ->
-            Toast.makeText(context, "$noteId", Toast.LENGTH_LONG).show()
-        }, this.context)
+        adapter = NoteAdapter(viewModel, ListType.TRASH ,NoteListener {}, this.context)
         binding.trashList.adapter = adapter
         viewModel.trashList.observe(viewLifecycleOwner, Observer {
             it?.let {

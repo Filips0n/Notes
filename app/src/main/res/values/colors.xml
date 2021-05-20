@@ -15,4 +15,5 @@
     <color name="green_note">#89CF36</color>
     <color name="blue_note">#566CD5</color>
     <color name="red_note">#CF7272</color>
+    <color name="pinned_note">#D33232</color>
 </resources>

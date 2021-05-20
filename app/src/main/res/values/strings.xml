@@ -49,4 +49,5 @@
     <string name="new_note_back_button">new note back button</string>
     <string name="save_note">save note changes</string>
     <string name="floating_action_button_to_create_new_note">Floating action button to create new note</string>
+    <string name="pin_button_desc">Pin button</string>
 </resources>

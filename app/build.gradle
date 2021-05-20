@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'org.jetbrains.dokka'
 }
 apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
@@ -38,7 +39,14 @@ android {
         getByName("main").java.srcDirs("build/generated/source/navigation-args")
     }
 }
-
+tasks.dokkaHtml.configure {
+    outputDirectory.set(file("../dokumentacia/html"))
+}
+tasks.withType(dokkaHtml.getClass()).configureEach{
+    pluginsMapConfiguration.set(
+            ["org.jetbrains.dokka.base.DokkaBase": """{"separateInheritedMembers": true}"""]
+    )
+}
 dependencies {
     implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0'
     implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0'

@@ -4,10 +4,19 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
+/**
+ * Datova tieda pre ulozenie poznamky
+ *
+ * @param noteId jedinecne ID poznamky
+ * @param noteTitle nadpis poznmaky
+ * @param noteText text poznamky
+ * @param color farba poznamky
+ */
 data class Note(val noteId: UUID,
                          var noteTitle: String,
                          var noteText: String,
-                         var color: NoteColor): Parcelable {
+                         var color: NoteColor,
+                         var isPinned : Boolean = false): Parcelable {
     constructor(parcel: Parcel) : this(
             TODO("noteId"),
             parcel.readString()!!,
@@ -33,5 +42,4 @@ data class Note(val noteId: UUID,
             return arrayOfNulls(size)
         }
     }
-
 }

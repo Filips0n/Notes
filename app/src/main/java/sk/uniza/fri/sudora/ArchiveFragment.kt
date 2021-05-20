@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -15,9 +14,7 @@ import sk.uniza.fri.sudora.adapter.NoteListener
 import sk.uniza.fri.sudora.databinding.FragmentArchiveBinding
 
 /**
- * A simple [Fragment] subclass.
- * Use the [ArchiveFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment, ktory zobrazuje poznamky ulozene v archive
  */
 class ArchiveFragment : Fragment() {
     private val viewModel: NoteListViewModel by activityViewModels()
@@ -25,14 +22,13 @@ class ArchiveFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //zobrazi action bar pred vstupom
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         val binding = DataBindingUtil.inflate<FragmentArchiveBinding>(inflater, R.layout.fragment_archive, container, false)
-
-        val adapter = NoteAdapter(viewModel, ListType.ARCHIVE ,NoteListener { noteId ->
-            Toast.makeText(context, "$noteId", Toast.LENGTH_LONG).show()
-        }, this.context)
+        //adapter pre zvladnutie prace s poznamkami
+        val adapter = NoteAdapter(viewModel, ListType.ARCHIVE ,NoteListener {}, this.context)
         binding.archiveList.adapter = adapter
-
+        //pozorovatel zmeny v zozname poznamok
         viewModel.archiveList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
